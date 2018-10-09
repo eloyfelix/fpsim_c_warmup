@@ -1,9 +1,9 @@
-from fpsim import load_fps, run_similarity
+from fpsim import load_fps, run_similarity, prepare_mol
 import time
 
 sim_thres = 0.7
 
-# aspirin
+# aspirin SMILES
 query_smiles = "CC(=O)Oc1ccccc1C(=O)O"
 
 t0 = time.time()
@@ -13,8 +13,9 @@ print("Time loading the fp file", t1-t0)
 
 print("")
 
+query_fp, fp_size = prepare_mol(query_smiles)
 t0 = t1
-res = run_similarity(query_smiles, sim_thres, moldb)
+res = run_similarity(query_fp, fp_size, sim_thres, moldb)
 t1 = time.time()
 print("Similarity search against chembl", t1-t0)
 print("Num results:", res.size)
@@ -26,7 +27,7 @@ print("")
 
 t0 = t1
 for i in range(85):
-    res = run_similarity(query_smiles, sim_thres, moldb)
+    res = run_similarity(query_fp, fp_size, sim_thres, moldb)
 t1 = time.time()
 print("Similarity search against chembl * 85 (~UCHEM size)", t1-t0)
 
