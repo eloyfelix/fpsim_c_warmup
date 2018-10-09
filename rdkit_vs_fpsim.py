@@ -40,7 +40,7 @@ rdsims.sort(key = lambda x:x[0], reverse=True)
 ######################################## FPSIM SIMILARITY
 
 
-from fpsim import load_fps, run_similarity
+from fpsim import load_fps, run_similarity, prepare_mol
 
 # keep all sims
 sim_thres = -0.01
@@ -49,7 +49,8 @@ sim_thres = -0.01
 moldb = load_fps("100mols.bin")
 
 # same query_smiles
-res = run_similarity(query_smiles, sim_thres, moldb)
+query_fp, fp_size = prepare_mol(query_smiles)
+res = run_similarity(query_fp, fp_size, sim_thres, moldb)
 
 fpsims = []
 for i in range(res.size):
